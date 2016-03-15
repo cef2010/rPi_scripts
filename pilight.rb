@@ -112,8 +112,10 @@ class PiLight
           self.set_rgb
         when "c"
           self.c
+        when "x"
+          break
         end
-        sleep @speed / 100
+        sleep (@speed / 100)
       end
     rescue
       Thread.kill(@stream)
@@ -123,5 +125,4 @@ class PiLight
     @stream.exit
     @stream = nil
   end
-
 end
