@@ -110,10 +110,10 @@ class PiLight
         @direction = !@direction
         @command = "h"
       when "j"
-        @speed += 0.1
+        @speed += 0.01
         @command = "h"
       when "k"
-        @speed -= 0.1
+        @speed -= 0.01
         @command = "h"
       when "s"
         self.set_spectrum
