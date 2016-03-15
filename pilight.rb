@@ -103,26 +103,30 @@ class PiLight
       exit
     end
     loop do
-      case @command
-      when "h"
-        self.cycle2
-      when "l"
-        @direction = !@direction
-        @command = "h"
-      when "j"
-        @speed += 0.01
-        @command = "h"
-      when "k"
-        @speed -= 0.01
-        @command = "h"
-      when "s"
-        self.set_spectrum
-      when "a"
-        self.set_rgb
-      when "c"
-        self.c
-      end
-      sleep @speed
+      begin
+        case @command
+        when "h"
+          self.cycle2
+        when "l"
+          @direction = !@direction
+          @command = "h"
+        when "j"
+          p @speed += 0.01
+          @command = "h"
+        when "k"
+          p @speed > 0 ? @speed -= 0.01 : 0
+          @command = "h"
+        when "s"
+          self.set_spectrum
+        when "a"
+          self.set_rgb
+        when "c"
+          self.c
+        end
+        sleep @speed
+      rescue
+        p 'error'
+      end  
     end
   end
 
