@@ -1,7 +1,7 @@
 require 'apa102_rbpi'
 include Apa102Rbpi
 class PiLight
-  attr_accessor :leds, :strip_length
+  attr_accessor :leds, :strip_length, :array, :stream, :speed, :direction
 
   def initialize(length)
     @strip_length = length
