@@ -1,3 +1,5 @@
+require 'apa102_rbpi'
+include Apa102Rbpi
 class PiLight
   attr_accessor :leds, :strip_length
 

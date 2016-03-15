@@ -1,7 +1,5 @@
-require 'apa102_rbpi'
 require 'pry'
 require_relative 'pilight'
-include Apa102Rbpi
 
 def rgb(r, g, b) #returns numberic value of r, g, b input (remove .to_i for hex values)
   [r, g, b].map { |x| 0 <= x && x <= 255 ? x.to_s(16).rjust(2, '0') : x < 0 ? '00' : 'ff' }.join('').to_i(16)
