@@ -6,40 +6,56 @@
 #   exit
 # end
 
-Thread.new do
-  begin
-    system("stty raw -echo")
-    @thing = STDIN.getc
-  ensure
-    system("stty -raw echo")
+def say
+  loop do
+    p @thing
   end
 end
 
-loop do
-  p @thing
-  sleep 0.5
-  # begin
-  #   system("stty raw -echo")
-  #   str = STDIN.getc
-  # ensure
-  #   system("stty -raw echo")
-  # end
-  # # logic here
-  # case str.chr
-  #   when "h"
-  #     p "self.cycle"
-  #   when "l"
-  #     p "self.cycle(true)"
-  #   when "j"
-  #     p "#faster"
-  #   when "k"
-  #     p "#slower"
-  #   when "s"
-  #     p "self.set_spectrum"
-  #   when "a"
-  #     p "self.set_rgb"
-  #   when "c"
-  #     p "self.c"
-  #   end
-  # break if str.chr == "d"
+def quit?
+  begin
+    while c = STDIN.read_nonblock(1)
+      @thing = c
+      return true
+    end
+    false
+  rescue Errno::EINTR
+    false
+  rescue Errno::EAGAIN
+    false
+  rescue EOFError
+    true
+  end
 end
+
+@thing = 'test'
+
+# Thread.new do
+#   loop do
+#     begin
+#       system("stty raw -echo")
+#       @thing = STDIN.getc
+#     ensure
+#       system("stty -raw echo")
+#     end
+#   end
+# end
+
+def looping
+  loop do
+    quit?
+    case @thing
+    when 't'
+      p 'non-looping case'
+    when 'r'
+      p 'another non-loop'
+    when 'l'
+      say
+    when 'x'
+      exit
+    end
+    sleep 1
+  end
+end
+
+looping

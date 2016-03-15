@@ -8,6 +8,7 @@ class PiLight
     @leds = Apa102.new(@strip_length)
     @array = []
     @stream = ''
+    @speed = 0
   end
 
   def c
@@ -85,6 +86,12 @@ class PiLight
     end
   end
 
+  def cycle2(reverse = false) # cycles through array given as a
+    @array.each_with_index { |x, i| @leds.set_pixel(i, x) }
+    @leds.show!
+    !reverse ? @array.unshift(@array.pop) : @array.push(@array.shift)
+  end
+
   def control
     @stream = ''
     Thread.new do
@@ -96,25 +103,22 @@ class PiLight
     end
     loop do
       case @command
-        when "h"
-          @stream = Thread.new do
-            self.cycle
-          end
-        when "l"
-          @stream = Thread.new do
-            self.cycle(true)
-          end
-        when "j"
-          #faster
-        when "k"
-          #slower
-        when "s"
-          self.set_spectrum
-        when "a"
-          self.set_rgb
-        when "c"
-          self.c
-        end
+      when "h"
+        self.cycle2
+      when "l"
+        self.cycle2(true)
+      when "j"
+        @speed += 0.1
+      when "k"
+        @speed -= 0.1
+      when "s"
+        self.set_spectrum
+      when "a"
+        self.set_rgb
+      when "c"
+        self.c
+      end
+      sleep @speed
     end
   end
 
