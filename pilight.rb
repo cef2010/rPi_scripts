@@ -14,11 +14,15 @@ class PiLight
     @array = []
   end
 
+  def self.rgb_hex(r, g, b) #returns numberic value of r, g, b input (remove .to_i for hex values)
+    [r, g, b].map { |x| 0 <= x && x <= 255 ? x.to_s(16).rjust(2, '0') : x < 0 ? '00' : 'ff' }.join('').to_i(16)
+  end
+
   def self.rgb(length) # returns red, green, and blue array for length
     a = []
-    (length / 3).times { |x| a << rgb(x + 1, 0, 0) }
-    (length / 3).times { |x| a << rgb(0, x + 1, 0) }
-    (length / 3).times { |x| a << rgb(0, 0, x + 1) }
+    (length / 3).times { |x| a << rgb_hex(x + 1, 0, 0) }
+    (length / 3).times { |x| a << rgb_hex(0, x + 1, 0) }
+    (length / 3).times { |x| a << rgb_hex(0, 0, x + 1) }
     a
   end
 
@@ -27,7 +31,7 @@ class PiLight
     height = length / 3
     r, g, b = height, 0, 0
     length.times do |i|
-      a << rgb(r, g, b)
+      a << rgb_hex(r, g, b)
       if i < height
         r -= 1
         g += 1
