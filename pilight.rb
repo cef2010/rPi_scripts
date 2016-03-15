@@ -9,6 +9,7 @@ class PiLight
     @array = []
     @stream = ''
     @speed = 0
+    @direction = false
   end
 
   def c
@@ -86,7 +87,7 @@ class PiLight
     end
   end
 
-  def cycle2(reverse = false) # cycles through array given as a
+  def cycle2(reverse = @direction) # cycles through array given as a
     @array.each_with_index { |x, i| @leds.set_pixel(i, x) }
     @leds.show!
     !reverse ? @array.unshift(@array.pop) : @array.push(@array.shift)
@@ -106,11 +107,14 @@ class PiLight
       when "h"
         self.cycle2
       when "l"
-        self.cycle2(true)
+        @direction = !@direction
+        @command = "h"
       when "j"
         @speed += 0.1
+        @command = "h"
       when "k"
         @speed -= 0.1
+        @command = "h"
       when "s"
         self.set_spectrum
       when "a"
