@@ -115,14 +115,13 @@ class PiLight
         when "x"
           break
         end
-        sleep (@speed / 100)
+        sleep (@speed * 0.01)
       end
     rescue
       Thread.kill(@stream)
       @stream = nil
       p 'error'
     end
-    @stream.exit
-    @stream = nil
+    self.c
   end
 end
