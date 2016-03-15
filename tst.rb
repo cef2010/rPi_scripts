@@ -1,12 +1,19 @@
-Thread.new do
-  while line = STDIN.gets
-    @thing = line.chomp
-    break if @thing == 'x'
-  end
-  exit
-end
+# Thread.new do
+#   while line = STDIN.gets
+#     @thing = line.chomp
+#     break if @thing == 'x'
+#   end
+#   exit
+# end
 
-@thing = 'hello'
+Thread.new do
+  begin
+    system("stty raw -echo")
+    @thing = STDIN.getc
+  ensure
+    system("stty -raw echo")
+  end
+end
 
 loop do
   p @thing

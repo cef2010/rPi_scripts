@@ -7,11 +7,13 @@ class PiLight
     @strip_length = length
     @leds = Apa102.new(@strip_length)
     @array = []
+    @stream = ''
   end
 
   def c
     @leds.clear!
     @array = []
+    @stream = ''
   end
 
   def self.rgb_hex(r, g, b) #returns numberic value of r, g, b input (remove .to_i for hex values)
@@ -84,6 +86,7 @@ class PiLight
   end
 
   def control
+    @stream = ''
     Thread.new do
       while line = STDIN.gets
         @command = line.chomp
@@ -94,9 +97,13 @@ class PiLight
     loop do
       case @command
         when "h"
-          self.cycle
+          @stream = Thread.new do
+            self.cycle
+          end
         when "l"
-          self.cycle(true)
+          @stream = Thread.new do
+            self.cycle(true)
+          end
         when "j"
           #faster
         when "k"
@@ -107,7 +114,7 @@ class PiLight
           self.set_rgb
         when "c"
           self.c
-        end        
+        end
     end
   end
 
