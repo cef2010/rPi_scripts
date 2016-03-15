@@ -78,11 +78,11 @@ class PiLight
     self.cycle
   end
 
-  def cycle(a = @array) # cycles through array given as a
+  def cycle(reverse = false) # cycles through array given as a
     loop do
-      a.each_with_index { |x, i| @leds.set_pixel(i, x) }
+      @array.each_with_index { |x, i| @leds.set_pixel(i, x) }
       @leds.show!
-      a.unshift(a.pop)
+      !reverse ? @array.unshift(@array.pop) : @array.push(@array.shift)
     end
   end
 
