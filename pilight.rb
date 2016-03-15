@@ -102,8 +102,8 @@ class PiLight
       end
       exit
     end
-    loop do
-      begin
+    begin
+      loop do
         case @command
         when "h"
           self.cycle2
@@ -124,10 +124,10 @@ class PiLight
           self.c
         end
         sleep @speed
-      rescue
-        p 'error'
-      end  
-    end
+      end
+    rescue
+      p 'error'
+    end  
   end
 
 end
