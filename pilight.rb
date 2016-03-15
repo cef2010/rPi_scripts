@@ -102,10 +102,10 @@ class PiLight
           @direction = !@direction
           @command = "h"
         when "j"
-          p @speed += 0.01
+          p @speed += 1
           @command = "h"
         when "k"
-          p @speed > 0 ? @speed -= 0.01 : 0
+          p @speed > 0 ? @speed -= 1 : 0
           @command = "h"
         when "s"
           self.set_spectrum
@@ -114,7 +114,7 @@ class PiLight
         when "c"
           self.c
         end
-        sleep @speed
+        sleep @speed / 100
       end
     rescue
       Thread.kill(@stream)
