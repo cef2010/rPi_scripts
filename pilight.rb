@@ -79,15 +79,7 @@ class PiLight
     @array = PiLight.custom(colors, @strip_length)
   end
 
-  def cycle(reverse = false) # cycles through array given as a
-    loop do
-      @array.each_with_index { |x, i| @leds.set_pixel(i, x) }
-      @leds.show!
-      !reverse ? @array.unshift(@array.pop) : @array.push(@array.shift)
-    end
-  end
-
-  def cycle2(reverse = @direction) # cycles through array given as a
+  def cycle(reverse = @direction) # cycles through array given as a
     @array.each_with_index { |x, i| @leds.set_pixel(i, x) }
     @leds.show!
     !reverse ? @array.unshift(@array.pop) : @array.push(@array.shift)
@@ -105,7 +97,7 @@ class PiLight
       loop do
         case @command
         when "h"
-          self.cycle2
+          self.cycle
         when "l"
           @direction = !@direction
           @command = "h"
@@ -125,6 +117,7 @@ class PiLight
         sleep @speed
       end
     rescue
+      Thread.kill(@stream)
       @stream = nil
       p 'error'
     end
