@@ -94,8 +94,7 @@ class PiLight
   end
 
   def control
-    @stream = ''
-    Thread.new do
+    @stream = Thread.new do
       while line = STDIN.gets
         @command = line.chomp
         break if @command == 'x'
@@ -126,8 +125,9 @@ class PiLight
         sleep @speed
       end
     rescue
+      @stream = nil
       p 'error'
-    end  
+    end
   end
 
 end
