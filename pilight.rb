@@ -84,15 +84,15 @@ class PiLight
   end
 
   def control
-    loop do
-      begin
-        system("stty raw -echo")
-        str = STDIN.getc
-      ensure
-        system("stty -raw echo")
+    Thread.new do
+      while line = STDIN.gets
+        @command = line.chomp
+        break if @command == 'x'
       end
-      # logic here
-      case str.chr
+      exit
+    end
+    loop do
+      case @command
         when "h"
           self.cycle
         when "l"
@@ -108,7 +108,6 @@ class PiLight
         when "c"
           self.c
         end        
-      break if str.chr == "d"
     end
   end
 
