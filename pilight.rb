@@ -120,7 +120,7 @@ class PiLight
       @stream = nil
       p 'error'
     end
-    Thread.kill(@stream)
+    @stream.exit
     @stream = nil
   end
 
