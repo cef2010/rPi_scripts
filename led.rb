@@ -29,4 +29,8 @@ def cycle(a) # cycles through array given as a
   end
 end
 
+def stop
+  @pilight.c
+end
+
 binding.pry

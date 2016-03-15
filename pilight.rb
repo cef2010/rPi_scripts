@@ -51,8 +51,8 @@ class PiLight
     height = length / arr.length
     a = arr.map { |x| x.to_i(16) }
     diff = a[1] - a[0]
-    step = diff / height
     a.each_with_index do |color, i|
+      step = diff / height
       c = color
       height.times do |s|
         result << c
