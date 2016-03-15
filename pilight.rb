@@ -65,17 +65,14 @@ class PiLight
 
   def set_spectrum
     @array = PiLight.spectrum(@strip_length)
-    self.cycle
   end
 
   def set_rgb
     @array = PiLight.rgb(@strip_length)
-    self.cycle
   end
 
   def set_custom(colors)
     @array = PiLight.custom(colors, @strip_length)
-    self.cycle
   end
 
   def cycle(reverse = false) # cycles through array given as a
@@ -83,6 +80,35 @@ class PiLight
       @array.each_with_index { |x, i| @leds.set_pixel(i, x) }
       @leds.show!
       !reverse ? @array.unshift(@array.pop) : @array.push(@array.shift)
+    end
+  end
+
+  def control
+    loop do
+      begin
+        system("stty raw -echo")
+        str = STDIN.getc
+      ensure
+        system("stty -raw echo")
+      end
+      # logic here
+      case str.chr
+        when "h"
+          self.cycle
+        when "l"
+          self.cycle(true)
+        when "j"
+          #faster
+        when "k"
+          #slower
+        when "s"
+          self.set_spectrum
+        when "a"
+          self.set_rgb
+        when "c"
+          self.c
+        end        
+      break if str.chr == "d"
     end
   end
 
