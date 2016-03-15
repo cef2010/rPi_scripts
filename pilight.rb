@@ -91,7 +91,6 @@ class PiLight
         @command = line.chomp
         break if @command == 'x'
       end
-      exit
     end
     begin
       loop do
