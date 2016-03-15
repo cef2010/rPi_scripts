@@ -56,7 +56,7 @@ class PiLight
       c = color
       height.times do |s|
         result << c
-        c -= step
+        c += step
       end
       diff = color - a[i-1]
     end
