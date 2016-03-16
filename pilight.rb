@@ -118,8 +118,7 @@ class PiLight
         sleep (@speed * 0.01)
       end
     rescue
-      Thread.kill(@stream)
-      @stream = nil
+      self.c
       p 'error'
     end
     self.c
