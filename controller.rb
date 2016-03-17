@@ -30,6 +30,10 @@ class Controller
     @handle = @device.open
   end
 
+  def close
+    @handle.close
+  end
+
   def reset_device_access
     h = @device.open
     h.detach_kernel_driver(0) # 0 for most devices, 1 for midifighter

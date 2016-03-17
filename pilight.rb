@@ -163,5 +163,6 @@ class PiLight
       p 'error'
     end
     self.c
+    @controller.close
   end
 end
