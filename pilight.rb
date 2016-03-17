@@ -1,4 +1,5 @@
 require 'apa102_rbpi'
+require_relative 'controller.rb'
 include Apa102Rbpi
 class PiLight
   attr_accessor :leds, :strip_length, :array, :stream, :speed, :direction
@@ -85,7 +86,7 @@ class PiLight
     !reverse ? @array.unshift(@array.pop) : @array.push(@array.shift)
   end
 
-  def control
+  def keyboard_control
     @stream = Thread.new do
       while line = STDIN.gets
         @command = line.chomp
@@ -113,6 +114,46 @@ class PiLight
         when "c"
           self.c
         when "x"
+          break
+        end
+        sleep (@speed * 0.01)
+      end
+    rescue
+      self.c
+      p 'error'
+    end
+    self.c
+  end
+
+  def n64_control
+    @controller = Controller.new(121, 6, 129, 7, 10)
+    @stream = Thread.new do
+      while control = @controller.raw_data
+        @command = @controller.button
+        break if @command == 'd-d'
+      end
+    end
+    begin
+      loop do
+        case @command
+        when "start"
+          self.cycle
+        when "z"
+          @direction = !@direction
+          @command = "start"
+        when "l"
+          p @speed += 1
+          @command = "start"
+        when "r"
+          p @speed > 0 ? @speed -= 1 : 0
+          @command = "start"
+        when "a"
+          self.set_spectrum
+        when "b"
+          self.set_rgb
+        when "d-u"
+          self.c
+        when "d-d"
           break
         end
         sleep (@speed * 0.01)
