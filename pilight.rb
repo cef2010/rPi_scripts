@@ -129,7 +129,7 @@ class PiLight
     @controller = Controller.new(121, 6, 129, 7, 10)
     @stream = Thread.new do
       while control = @controller.raw_data
-        @command = @controller.button
+        @command = @controller.button if (control[5] != 15) || (control[6] != 0) 
         break if @command == 'd-d'
       end
     end
