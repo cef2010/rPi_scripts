@@ -50,26 +50,28 @@ class Controller
   def button
     c = self.raw_data
     case c[6]
-    when 1
-      return 'l'
-    when 2
-      return 'r'
-    when 4
-      return 'a'
-    when 16
-      return 'b'
-    when 8
-      return 'z'
-    when 32
-      return 'start'
+      when 1
+        return 'l'
+      when 2
+        return 'r'
+      when 4
+        return 'a'
+      when 16
+        return 'b'
+      when 8
+        return 'z'
+      when 32
+        return 'start'
+    end
     case c[5]
-    when 0
-      return 'd-u'
-    when 2
-      return 'd-r'
-    when 4
-      return 'd-d'
-    when 6
-      return 'd-l'
+      when 0
+        return 'd-u'
+      when 2
+        return 'd-r'
+      when 4
+        return 'd-d'
+      when 6
+        return 'd-l'
+    end
   end
 end
