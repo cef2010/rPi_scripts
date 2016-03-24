@@ -1,7 +1,8 @@
 require 'apa102_rbpi'
 require_relative 'controller.rb'
 include Apa102Rbpi
-class PiLight
+
+class PiLight #Class controls array of APA102 Leds
   attr_accessor :leds, :strip_length, :array, :stream, :speed, :direction
 
   def initialize(length)
