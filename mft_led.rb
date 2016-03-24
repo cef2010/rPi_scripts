@@ -1,6 +1,6 @@
-require 'redisbot.rb'
-require 'midifightertwister.rb'
-require 'pilight.rb'
+require_relative 'redisbot.rb'
+require_relative 'midifightertwister.rb'
+require_relative 'pilight.rb'
 
 def color_twist(color)
   @pilight.strip_length.times {|i| @pilight.leds.set_pixel!(i, color)}
