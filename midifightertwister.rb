@@ -2,7 +2,7 @@ require 'micromidi'
 require 'pry'
 
 class MidiFighterTwister
-  attr_accessor :input
+  attr_accessor :input, :stop
   def initialize
     @input = UniMIDI::Input.use(:first)
     @stop = [131, 13, 0]
@@ -17,7 +17,7 @@ class MidiFighterTwister
   end
 end
 
-# mf = MidiFighter.new
+# mf = MidiFighterTwister.new
 #
 # mf.output_stream
 # puts 'done'
