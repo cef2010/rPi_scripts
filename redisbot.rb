@@ -5,7 +5,7 @@ require 'pry'
 class RedisBot
   attr_accessor :connection, :stream
   def initialize(url = "redis://127.0.0.1:6379/0")
-    @connection = Redis.new(url: "redis://127.0.0.1:6379/0")
+    @connection = Redis.new(url: url)
     @stream = 'stream'
   end
 
